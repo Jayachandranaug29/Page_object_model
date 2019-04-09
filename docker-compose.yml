@@ -1,0 +1,23 @@
+version: '2'
+services:
+  code:
+    build: .
+    command: bash go.sh
+    container_name: my-web-container
+    depends_on:
+      - hub
+  chrome:
+    image: selenium/node-chrome:3.9.1
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - "5555:5555"
+    environment:
+      HUB_HOST: hub
+  hub:
+    image: selenium/hub:3.11.0-californium
+    depends_on:
+      - chrome
+
+
+
